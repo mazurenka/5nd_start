@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import {Accordion} from "./Components/Accordion/Accordion";
+import {Rating, RatingValueType} from "./Components/Rating/Rating";
+import {OnOff} from "./Components/OnOff/OnOff";
+import {UnRating} from "./Components/Rating/UncontrolledRating/UnRating";
+import UncontrolledOnOff from "./Components/UncontrolledOnOff/UncontrolledOnOff";
+
+function App(props: any) {
+
+    let [ratingValue, setRatingValue] = useState<RatingValueType>(4)
+    let [accordionCollapsed, setAccordionCollapsed] = useState<boolean>(false)
+    let [swichOn, setSwichOn] = useState<boolean>(false)
+    return (
+        <div className={'App'}>
+
+            <Rating value={ratingValue}
+                    onClick={setRatingValue}/>
+
+            <UnRating/>
+
+            <Accordion titleValue={'Menu'}
+                       collapsed={accordionCollapsed}
+                       onChange = {() => {setAccordionCollapsed(!accordionCollapsed)} }
+            />
+
+            <OnOff  on={swichOn} onChange={setSwichOn}/>
+
+            <UncontrolledOnOff onChange={setSwichOn}/> {swichOn.toString()}
+
+        </div>
+    )
 }
 
-export default App;
+type PageTitlePropsType = {
+    title: string
+}
+
+function PageTitle(props: PageTitlePropsType) {
+    return (
+        <h1>{props.title}</h1>
+    )
+}
+
+export default App
